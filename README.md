@@ -1,6 +1,8 @@
 # LaughGen-AI
 Multi-Modal Humor Generation for Reddit Posts
 
+![funny-bot-wide](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/funny-bot-wide.png?raw=true)
+
 ## Table of Contents
 
 - [Overview](#overview)
