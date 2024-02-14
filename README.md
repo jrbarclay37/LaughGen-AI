@@ -15,10 +15,18 @@ Multi-Modal Humor Generation for Reddit Posts
 In this repository, I will be fine-tuning Llama2 on top comments from submissions on the subreddit, r/funny. 
 
 ## Data Collection
-- Scraping Reddit
-- Generating Image Descriptions with BLIP (include model selection)
-- Imputing missing Images with Few-Shot Learning
+This is the most crucial part of the project and makes up for the bulk of the effort. In order to procure a high quality dataset that results in a good fine-tuned model the following steps are taken:
+- **Scrape** *r/funny* using [PRAW (The Python Reddit API Wrapper)](https://praw.readthedocs.io/en/stable/)
+- **Generate image descriptions** with [BLIP Image Captioning Model](https://huggingface.co/Salesforce/blip-image-captioning-large)
+- **Impute missing image descriptions** with few-shot learning
 
 ## Fine-Tuning
+Use QLoRA to fine-tune Llama2 on the curated Reddit dataset.
 
 ## Deployment
+
+### Phase I (Interact via API)
+For this initial phase, I will deploy this system where users can submit the URL of a post from any subreddit and a witty comment will be returned. 
+
+### Phase II (Reddit bot)
+For this second phase, I will release a Reddit bot into the wild to make humorous comments on posts for numerous communities.
