@@ -7,7 +7,7 @@ Multi-Modal Humor Generation for Reddit Posts
 
 - [Overview](#overview)
 - [Data Enrichment and Preparation Pipeline](#data-enrichment-and-preparation-pipeline)
-- [Fine-Tuning](#fine-tuning)
+- [Supervised Fine-Tuning with PEFT](#supervised-fine-tuning-with-peft)
 - [Deployment](#deployment)
 
 ## Overview
@@ -20,7 +20,7 @@ This is the most crucial part of the project and makes up for the bulk of the ef
 - **Generate image descriptions** with [BLIP Image Captioning Model](https://huggingface.co/Salesforce/blip-image-captioning-large)
 - **Impute missing image descriptions** with few-shot learning
 
-## Fine-Tuning
+## Supervised Fine-Tuning with PEFT
 Use QLoRA to fine-tune Llama2 on the curated Reddit dataset.
 
 ## Deployment
