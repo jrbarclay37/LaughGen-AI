@@ -12,7 +12,9 @@ Multi-Modal Humor Generation for Reddit Posts
 
 ## Overview
 
-In this repository, I will be fine-tuning [Llama 2 13B](https://huggingface.co/meta-llama/Llama-2-13b) on top comments from submissions on the subreddit, r/funny. 
+In this repository, I will be fine-tuning [Llama 2 13B](https://huggingface.co/meta-llama/Llama-2-13b) on top comments from submissions on the subreddit, r/funny.
+
+Humor is a complex and subjective domain, and while language models can generate amusing content, their attempts often fall into the realm of predictably corny. Prompting can improve this, but it's difficult to emulate the level of wittiness of comments on r/funny that are so ridiculous they'll have you spewing your morning cup of coffee all over your keyboard. 
 
 ## Data Enrichment and Preparation Pipeline
 This is the most crucial part of the project and makes up for the bulk of the effort. In order to procure a high quality dataset that results in a good fine-tuned model the following steps are taken:
