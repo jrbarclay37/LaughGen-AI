@@ -12,16 +12,16 @@ Multi-Modal Humor Generation for Reddit Posts
 
 ## Overview
 
-In this repository, I will be fine-tuning Llama2 on top comments from submissions on the subreddit, r/funny. 
+In this repository, I will be fine-tuning Llama2 13B on top comments from submissions on the subreddit, r/funny. 
 
 ## Data Enrichment and Preparation Pipeline
 This is the most crucial part of the project and makes up for the bulk of the effort. In order to procure a high quality dataset that results in a good fine-tuned model the following steps are taken:
-- **Scrape** *r/funny* using [PRAW (The Python Reddit API Wrapper)](https://praw.readthedocs.io/en/stable/)
+- **Scrape** *r/funny* using [PRAW (Python Reddit API Wrapper)](https://praw.readthedocs.io/en/stable/)
 - **Generate image descriptions** with [BLIP Image Captioning Model](https://huggingface.co/Salesforce/blip-image-captioning-large)
 - **Impute missing image descriptions** with few-shot learning
 
 ## Supervised Fine-Tuning with PEFT
-Use QLoRA to fine-tune Llama2 on the curated Reddit dataset.
+Use QLoRA to fine-tune Llama2 13B on the curated Reddit dataset.
 
 ## Deployment
 
