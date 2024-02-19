@@ -20,8 +20,8 @@ Humor is a complex and subjective domain, and while language models can generate
 This is the most crucial part of the project and makes up for the bulk of the effort. In order to procure a high quality dataset that results in a good fine-tuned model the following steps are taken:
 - Scrape *r/funny* using [PRAW (Python Reddit API Wrapper)](https://praw.readthedocs.io/en/stable/)
 - Generate image descriptions with [BLIP Image Captioning Model](https://huggingface.co/Salesforce/blip-image-captioning-large)
-- Augment image descriptions with celebrity and text [Amazon Rekognition](https://aws.amazon.com/rekognition/)
-- Impute missing image descriptions with few-shot learning via [GPT-4](https://openai.com/gpt-4)
+- Augment image descriptions with celebrity and text detection using [Amazon Rekognition](https://aws.amazon.com/rekognition/)
+- Impute missing image descriptions with few-shot learning using [GPT-4](https://openai.com/gpt-4)
 
 ## Supervised Fine-Tuning with PEFT
 Use QLoRA to fine-tune Llama 2 13B on the curated Reddit dataset.
