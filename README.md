@@ -12,7 +12,7 @@ Multi-Modal Humor Generation for Reddit Posts
 
 ## Overview
 
-In this repository, I will be fine-tuning Llama2 13B on top comments from submissions on the subreddit, r/funny. 
+In this repository, I will be fine-tuning Llama 2 13B on top comments from submissions on the subreddit, r/funny. 
 
 ## Data Enrichment and Preparation Pipeline
 This is the most crucial part of the project and makes up for the bulk of the effort. In order to procure a high quality dataset that results in a good fine-tuned model the following steps are taken:
@@ -21,7 +21,7 @@ This is the most crucial part of the project and makes up for the bulk of the ef
 - **Impute missing image descriptions** with few-shot learning
 
 ## Supervised Fine-Tuning with PEFT
-Use QLoRA to fine-tune Llama2 13B on the curated Reddit dataset.
+Use QLoRA to fine-tune Llama 2 13B on the curated Reddit dataset.
 
 ## Deployment
 
