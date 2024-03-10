@@ -8,10 +8,13 @@ from urllib.request import urlretrieve
 
 
 def lambda_handler(event, context):
-
+    
     try:
     
         bucket_name = 'sagemaker-us-east-1-513033806411'
+        
+        blip_endpoint_name = "huggingface-pytorch-inference-2024-03-08-16-01-37-935"
+        llm_endpoint_name = "huggingface-pytorch-tgi-inference-2024-03-08-17-46-49-268"
 
         # Initialize Reddit Client
         reddit = initialize_reddit_client()
@@ -29,14 +32,14 @@ def lambda_handler(event, context):
         response = {
             "id": submission.id,
             "title": submission.title,
-            "body": submission.selftext
+            "body": submission.selftext,
             "url": submission.url
         }
-
+        
         prompt = initialize_prompt(response)
 
         # If there is an image, process it
-        if image_url.endswith(('.jpg', '.png')):
+        if submission.url.endswith(('.jpg', '.png', '.jpeg')):
 
             # Download the image to a temporary location
             image_path = download_image(submission.id, submission.url)
@@ -44,30 +47,27 @@ def lambda_handler(event, context):
             # Upload the image to S3
             object_key = upload_image_to_s3(bucket_name, image_path)
 
-            # Generate an image caption using the BLIP model
-            image_caption = generate_caption_from_s3(bucket_name, object_key, endpoint_name)
-
+            # Generate caption
+            image_caption = generate_image_caption(blip_endpoint_name, submission.url)
             celebrities, detected_texts = get_celebrity_text(bucket_name, object_key)
-
         else:
-
             image_caption, celebrities, detected_texts = ('','','')
-
+            
         # format image context
         image_context = format_image_context(image_caption, celebrities, detected_texts)
-
+    
         #finalize prompt
-        final_prompt = finalize_prompt(base_prompt, image_context)
+        final_prompt = finalize_prompt(prompt, image_context)
 
         # Get a response from the Llama2 model using the post title and image caption
-        llama_response = get_llama_response(endpoint_name, text_input)
+        llama_response = get_llama_response(llm_endpoint_name, final_prompt)
 
         # Return the response
         return {
             'statusCode': 200,
             'body': json.dumps(llama_response)
         }
-
+    
     except Exception as e:
         print(str(e))
         return "Error generating comment"
@@ -111,7 +111,7 @@ def initialize_reddit_client():
 
 
 def initialize_prompt(response):
-
+        
     reddit_post = response['title'] + '\n\n' + response['body'] if response['body'] else response['title']
 
     user_prompt = f"""### Instruction:
@@ -121,73 +121,70 @@ Respond to this Reddit post with an award winning top comment.
 {reddit_post}
 
 ### Image Context:\n"""
-
+    
     return user_prompt
 
 
 def format_image_context(image_caption, celebrities, detected_texts):
-
+    
     image_context = f"""- Description:{image_caption}\n-Text:{detected_texts}\n-Celebrities:{celebrities}\n\n"""
-
+    
     return image_context
-
+    
 
 def finalize_prompt(base_prompt, image_context):
-
+    
     final_prompt = base_prompt + image_context + """### Response:\n"""
-
+    
     return final_prompt
 
 
 def download_image(image_id, image_url):
-
-    local_filename = f"/tmp/image_{image_id}{image_url[-4:]}"
+    
+    local_filename = f"/tmp/image_{image_id}{image_url.split('.')[1]}"
     urlretrieve(image_url, local_filename)
-
+    
     return local_filename
 
 
 def upload_image_to_s3(bucket_name, image_path):
+    s3 = boto3.client('s3')
     object_key = f"reddit/funny/inference/posts/{os.path.basename(image_path)}"
     s3.upload_file(image_path, bucket_name, object_key)
     return object_key
 
 
-def generate_caption_from_s3(bucket_name, object_key, endpoint_name):
-    """Generate a caption for the image using a BLIP model hosted on SageMaker"""
+def generate_image_caption(endpoint_name, img_url):
+    
 
-    # Initialize the SageMaker runtime client
-    runtime = boto3.client('sagemaker-runtime')
+    # Create a SageMaker runtime client
+    client = boto3.client('sagemaker-runtime')
 
-    # Get the object from S3
-    try:
-        # Instead of loading the image into PIL, we'll directly send the image bytes to the SageMaker endpoint
-        response = s3.get_object(Bucket=bucket_name, Key=object_key)
-        image_bytes = response['Body'].read()
+    # Provide the payload you want to use for prediction
+    data = {
+        "inputs": {
+            "img_url": img_url,
+            "text" : "An image of ",
+        }
+    }
+    payload = json.dumps(data)
 
-        # Prepare the payload for SageMaker endpoint - the specifics depend on how the model expects the input
-        # For example, if your model expects JSON payload, you might need to base64 encode the image bytes.
-        # Here, we assume the endpoint can directly take the image bytes.
-        payload = image_bytes
+    # Specify the content type and accept headers
+    content_type = "application/json"
+    accept = "application/json"
 
-        # Invoke the SageMaker endpoint
-        # The ContentType in the invoke_endpoint call should match what your model expects.
-        # This example uses 'application/x-image', but if your model expects a JSON payload with
-        # a base64-encoded image, you'll need to adjust both the payload preparation and content type accordingly.
-        response = runtime.invoke_endpoint(EndpointName=endpoint_name,
-                                           ContentType='application/x-image',  # Adjust if your model expects a different content type
-                                           Body=payload)
+    # Invoke the endpoint
+    response = client.invoke_endpoint(
+        EndpointName=endpoint_name,
+        ContentType=content_type,
+        Accept=accept,
+        Body=payload
+    )
 
-        # Parse the result - adjust this based on how your model returns the caption
-        result = json.loads(response['Body'].read().decode())
-
-        return result['caption']  # Adjust this key based on your model's response structure
-
-    except Exception as e:
-        print(str(e))
-        return "Error generating caption"
-
-
+    # Print the prediction result
+    print(response['Body'].read().decode())
+    
+    
 def get_celebrity_text(bucket_name, object_key):
 
     # Initialize the Rekognition client
@@ -212,9 +209,9 @@ def get_celebrity_text(bucket_name, object_key):
 
 def get_llama_response(endpoint_name, text_input):
     """Generate a response using the Llama model hosted on a SageMaker endpoint."""
-
+    
     # Initialize the SageMaker runtime client
-    runtime = boto3.client('sagemaker-runtime')
+    client = boto3.client('sagemaker-runtime')
 
     # Prepare the payload for the SageMaker endpoint
     payload = {
@@ -223,6 +220,7 @@ def get_llama_response(endpoint_name, text_input):
             "max_new_tokens": 64,
             "top_p": 0.9,
             "temperature": 0.6,
+            "stop": ["</s>"]
         },
     }
 
@@ -231,7 +229,7 @@ def get_llama_response(endpoint_name, text_input):
 
     try:
         # Invoke the SageMaker endpoint
-        response = runtime.invoke_endpoint(EndpointName=endpoint_name,
+        response = client.invoke_endpoint(EndpointName=endpoint_name,
                                            ContentType='application/json',  # Specify the content type for your payload
                                            Body=payload_json)
 
@@ -244,8 +242,4 @@ def get_llama_response(endpoint_name, text_input):
     except Exception as e:
         print(f"Error invoking SageMaker endpoint: {str(e)}")
         return "Error generating response"
-
-# Example usage:
-# endpoint_name = 'your-llama-model-endpoint-name'
-# text_input = "I believe the meaning of life is"
-# print(get_llama_response(endpoint_name, text_input))
+        
