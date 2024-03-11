@@ -31,11 +31,13 @@ Use QLoRA to fine-tune Llama 2 13B on the curated Reddit dataset.
 ### Phase I (Interact via API)
 For this initial phase, I will deploy this system where users can submit the URL of a post from any subreddit and a witty comment will be returned. 
 
+#### Example Post:
 ![amazon-delivery-post](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/model_results/amazon_delivery_french_bulldog.png?raw=true)
-
+#### Payload:
 ![amazon-delivery-payload](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/model_results/amazon_delivery_payload.png?raw=true)
-
+#### Response:
 ![amazon-delivery-response](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/model_results/amazon_delivery_response.png?raw=true)
 
 ### Phase II (Reddit bot)
+#### In Progress
 For this second phase, I will release a Reddit bot into the wild to make humorous comments on posts for numerous communities.
