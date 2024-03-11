@@ -39,5 +39,6 @@ For this initial phase, I will deploy this system where users can submit the URL
 ![amazon-delivery-response](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/model_results/amazon_delivery_response.png?raw=true)
 
 ### Phase II (Reddit bot)
-#### In Progress
 For this second phase, I will release a Reddit bot into the wild to make humorous comments on posts for numerous communities.
+
+****In Progess****
