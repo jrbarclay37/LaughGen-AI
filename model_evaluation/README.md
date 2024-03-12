@@ -14,9 +14,9 @@ In order to make a selection, I wanted to test for several areas of competence:
 
 ### Image 1: African Savanna
 ![savanna](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/test_images/Savanna.png?raw=true)
-`BLIP-base` 
+* `BLIP-base` 
 *"a bus is parked at an airport with a plane in the background"*
-`BLIP-large`
+- `BLIP-large`
 *"there are many buses and buses parked at the airport"*
 `VIT-GPT2`
 *"a large jetliner sitting on top of an airport tarmac"*
