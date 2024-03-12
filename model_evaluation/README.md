@@ -1,9 +1,9 @@
 ## Image Captioning Model Evaluation
 
 I evaluated several models from huggingface's top [image-to-text models](https://huggingface.co/models?pipeline_tag=image-to-text):
-- a) [Salesforce/blip-image-captioning-base](https://huggingface.co/Salesforce/blip-image-captioning-base)
-- b) [Salesforce/blip-image-captioning-large](https://huggingface.co/Salesforce/blip-image-captioning-large)
-- c) [nlpconnect/vit-gpt2-image-captioning](https://huggingface.co/nlpconnect/vit-gpt2-image-captioning)
+1. [Salesforce/blip-image-captioning-base](https://huggingface.co/Salesforce/blip-image-captioning-base)
+2. [Salesforce/blip-image-captioning-large](https://huggingface.co/Salesforce/blip-image-captioning-large)
+3. [nlpconnect/vit-gpt2-image-captioning](https://huggingface.co/nlpconnect/vit-gpt2-image-captioning)
 
 In order to make a selection, I wanted to test for several areas of competence: 
 - Can it accurately identify what is pictured? (this one is pretty important)
@@ -14,7 +14,12 @@ In order to make a selection, I wanted to test for several areas of competence:
 
 ### Image 1: African Savanna
 ![savanna](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/test_images/Savanna.png?raw=true)
-
+`BLIP-base` 
+*"a bus is parked at an airport with a plane in the background"*
+`BLIP-large`
+*"there are many buses and buses parked at the airport"*
+`VIT-GPT2`
+*"a large jetliner sitting on top of an airport tarmac"*
 
 ### Image 2: Soccer Players
 ![soccer](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/test_images/soccer_player.png?raw=true)
