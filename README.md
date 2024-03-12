@@ -12,7 +12,7 @@ Multi-Modal Humor Generation for Reddit Posts
 
 ## Overview
 
-In this repository, I will be fine-tuning [Llama 2 13B](https://huggingface.co/meta-llama/Llama-2-13b) on top comments from submissions on the subreddit, r/funny.
+In this repository, I will be fine-tuning [LLaMA 2 13B](https://huggingface.co/meta-llama/Llama-2-13b) on top comments from submissions on the subreddit, r/funny.
 
 Humor is a complex and subjective domain, and while language models can generate amusing content, their attempts often fall into the realm of predictably corny. Prompting can improve this, but it's difficult to emulate the level of wittiness of comments on r/funny that are so ridiculous they'll have you spewing your morning cup of coffee all over your keyboard. This project aims to bridge that gap, leveraging the unique humor of r/funny to bring a new level of comedic intelligence to Llama 2 13B.
 
@@ -24,7 +24,7 @@ This is the most crucial part of the project and makes up for the bulk of the ef
 - Impute missing image descriptions with few-shot learning using [GPT-4](https://openai.com/gpt-4)
 
 ## Supervised Fine-Tuning with PEFT
-Use QLoRA to fine-tune Llama 2 13B on the curated Reddit dataset.
+Use [QLoRA](https://github.com/artidoro/qlora) to fine-tune LLaMA 2 13B on the curated Reddit dataset.
 
 ## Deployment
 
