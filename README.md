@@ -31,6 +31,8 @@ Use [QLoRA](https://github.com/artidoro/qlora) to fine-tune LLaMA 2 13B on the c
 ### Phase I (Interact via API)
 For this initial phase, I will deploy this system where users can submit the URL of a post from any subreddit and a witty comment will be returned. 
 
+![deployment_phase_i_diagram](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/deployment_phase_i_diagram.png?raw=true)
+
 #### Example Post:
 ![amazon-delivery-post](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/model_results/amazon_delivery_french_bulldog.png?raw=true)
 #### Payload:
