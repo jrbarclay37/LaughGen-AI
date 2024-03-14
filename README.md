@@ -42,3 +42,5 @@ For this initial phase, I will deploy this system where users can submit the URL
 
 ### Phase II (Reddit bot)
 For this second phase, I will release a Reddit bot into the wild to make humorous comments on posts for numerous communities.
+
+![deployment_phase_ii_diagram](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/deployment_phase_ii_diagram.png?raw=true)
