@@ -21,6 +21,8 @@ In order to make a selection, I wanted to test for several areas of competence:
 - `VIT-GPT2`
 *"a herd of giraffes and zebras grazing in a field"*
 
+The base model had a typo, but all models accurately described the picture.
+
 ### Image 2: Soccer Players
 ![soccer](https://github.com/jrbarclay37/LaughGen-AI/blob/main/images/test_images/soccer_player.png?raw=true)
 - `BLIP-base` 
@@ -74,4 +76,7 @@ In order to make a selection, I wanted to test for several areas of competence:
 *"woman with hands folded in prayer while sitting at a table"*
 - `VIT-GPT2`
 *"a woman is sitting on a wooden floor"*
+
+## Conclusion
+
 
